@@ -16,4 +16,14 @@ torch.tensor是自动求导的中心类。如果你把它的属性.requires_grad
 如果要停止追踪历史停止使用多余的内存的话，你可以把代码块藏进 with torch.no_grad():里面。这招在评估模型时特别有用，因为模型可能具有可训练的参数，设置了requires_grad=True，但是评估模型的时候并不需要梯度。训练时候需要，评估时候不需要。
 
 这里有另一个对于自动求导实现的非常重要的类，Function类。
+
+tensor和function这两个类是内部关联的，一起组成了一个有向无环图（acyclic graph），这个图描述了一个完整的计算历史。每个tensor有一个.grad_fn的属性，它引用了创建张量的函数（除了那些用户自己创建的tensor，它们的grad_fn是None）。
+
+如果你想计算导数，你可以在tensor上面调用.backward()方法。如果tensor是一个标量scalar（就是它只包含了一个元素），那么你backward()的时候不需要指定任何参数。但是如果它不止一个元素，你需要指定一个于tensor的形状匹配的gradient参数。
 '''
+
+import torch
+
+# 创建一个tensor并设置requires_grad=True来记录它经历的计算。
+x = torch.ones(2,2,requires_grad=True)
+print(x)
