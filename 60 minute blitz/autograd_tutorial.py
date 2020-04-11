@@ -27,3 +27,30 @@ import torch
 # 创建一个tensor并设置requires_grad=True来记录它经历的计算。
 x = torch.ones(2,2,requires_grad=True)
 print(x)
+
+# 搞个tensor的操作
+y = x + 2
+print(y)
+
+# y作为一个操作的结果被创建，所以它有grad_fn
+print(y.grad_fn)
+
+# 在y上面多搞点操作
+z = y * y *3
+out = z.mean()
+
+print(z,out)
+
+# .requires_grad_(...)这个方法会原地改变一个已存在的tensor的requires_grad的flag。如果没有指定的话，输入的flag默认是False。
+a = torch.randn(2,2)
+a = ((a * 3) / (a - 1))
+print(a.requires_grad)
+a.requires_grad_(True)
+print(a.requires_grad)
+b = (a * a).sum()
+print(b.grad_fn)
+
+'''
+梯度
+
+'''
