@@ -1,4 +1,4 @@
-# 临时用用的，求证某些事情的
+# 临时用用的，求证某些事情的 test
 
 from __future__ import print_function
 import torch
