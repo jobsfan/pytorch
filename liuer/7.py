@@ -4,6 +4,7 @@ import torch
 
 x_ = np.loadtxt('diabetes_data.csv.gz',delimiter=' ',dtype=np.float32)
 y_ = np.loadtxt('diabetes_target.csv.gz',delimiter=' ',dtype=np.float32)
+y_ = np.expand_dims(y_,axis=1)
 
 x_data = torch.from_numpy(x_)
 y_data = torch.from_numpy(y_)
@@ -26,7 +27,7 @@ class Model(torch.nn.Module):
 
 model = Model()
 
-criterion = torch.nn.BCELoss(size_average=True)
+criterion = torch.nn.BCELoss(reduction='mean')
 
 optimizer = torch.optim.SGD(model.parameters(),lr=0.1)
 
