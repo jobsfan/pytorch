@@ -5,19 +5,20 @@ import torch
 import torch.nn.functional as F
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
-train_set = torchvision.datasets.MNIST(root='../dataset/mnist',train=True,download=True)
-test_set = torchvision.datasets.MNIST(root='../dataset/mnist',train=False,download=True)
+train_set = torchvision.datasets.MNIST(root='../dataset/mnist', train=True, download=True)
+test_set = torchvision.datasets.MNIST(root='../dataset/mnist', train=False, download=True)
 
-x_data = torch.Tensor([[1.0],[2.0],[3.0]])
-y_data = torch.Tensor([[0],[0],[1]])
+x_data = torch.Tensor([[1.0], [2.0], [3.0]])
+y_data = torch.Tensor([[0], [0], [1]])
 
 class LogisticRegressionModel(torch.nn.Module):
     def __init__(self):
         super(LogisticRegressionModel,self).__init__()
-        self.linear = torch.nn.Linear(1,1)
+        self.linear = torch.nn.Linear(1, 1)
 
-    def forward(self,x):
+    def forward(self, x):
         y_pred = F.sigmoid(self.linear(x))
         return y_pred
 
@@ -28,8 +29,8 @@ optimizer = torch.optim.SGD(model.parameters(),lr=0.01)
 
 for epoch in range(1000):
     y_pred = model(x_data)
-    loss = criterion(y_pred,y_data)
-    print(epoch,loss.item())
+    loss = criterion(y_pred, y_data)
+    print(epoch, loss.item())
 
     optimizer.zero_grad()
     loss.backward()
